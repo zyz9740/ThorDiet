@@ -1,25 +1,23 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, NativeModules } from 'react-native';
 import { Icon, SearchBar, TabBar, Button } from '@ant-design/react-native';
 
 import HomePage from "./HomePage/HomePage"
-import ListPage from "./ListPage/ListPage"
+import ListPageNavigator from "./ListPage/ListPageNavigator"
+import PrivatePage from "./PrivatePage/PrivatePage"
 
 export default class BasicTabBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'blueTab',
+      selectedTab: 'home',
     };
   }
-  renderContent(pageText) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', backgroundColor: 'white' }}>
-        <Text style={{ margin: 50 }}>{pageText}</Text>
-        <Button onPress={this.onChangeTab.bind(this,'redTab')}>default</Button>
-      </View>
-    );
+
+  componentDidMount() {
+      NativeModules.SplashScreen.hide();
   }
+
   onChangeTab(tabName) {
   	console.log("****");
     this.setState({
@@ -37,37 +35,46 @@ export default class BasicTabBar extends React.Component {
           title="主页"
           icon={require("../images/home.png")}
           selectedIcon={require("../images/homeColored.png")}
-          selected={this.state.selectedTab === 'blueTab'}
-          onPress={() => this.onChangeTab('blueTab')}
+          selected={this.state.selectedTab === 'home'}
+          onPress={() => this.onChangeTab('home')}
         >
           <HomePage />
+        </TabBar.Item>
+        <TabBar.Item
+            icon={require("../images/meal.png")}
+            selectedIcon={require("../images/mealColored.png")}
+            title="正餐"
+            selected={this.state.selectedTab === 'meal'}
+            onPress={this.onChangeTab.bind(this,'meal')}
+        >
+          <ListPageNavigator />
         </TabBar.Item>
         <TabBar.Item
           icon={require("../images/food.png")}
           selectedIcon={require("../images/foodColored.png")}
           title="加餐"
-          selected={this.state.selectedTab === 'redTab'}
-          onPress={this.onChangeTab.bind(this,'redTab')}
+          selected={this.state.selectedTab === 'food'}
+          onPress={this.onChangeTab.bind(this,'food')}
         >
-          <ListPage />
+          <ListPageNavigator />
         </TabBar.Item>
         <TabBar.Item
           icon={require("../images/sport.png")}
           selectedIcon={require("../images/sportColored.png")}
           title="运动"
-          selected={this.state.selectedTab === 'greenTab'}
-          onPress={() => this.onChangeTab('greenTab')}
+          selected={this.state.selectedTab === 'sport'}
+          onPress={() => this.onChangeTab('sport')}
         >
-          <ListPage />
+          <ListPageNavigator />
         </TabBar.Item>
         <TabBar.Item
           icon={require("../images/person.png")}
           selectedIcon={require("../images/personColored.png")}
           title="我的"
-          selected={this.state.selectedTab === 'yellowTab'}
-          onPress={() => this.onChangeTab('yellowTab')}
+          selected={this.state.selectedTab === 'person'}
+          onPress={() => this.onChangeTab('person')}
         >
-          <ListPage />
+          <PrivatePage />
         </TabBar.Item>
       </TabBar>
     );

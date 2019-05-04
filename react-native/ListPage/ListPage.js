@@ -1,101 +1,95 @@
-import React from 'react';
-import { Image, ScrollView, View } from 'react-native';
-import { List } from '@ant-design/react-native';
+import React from "react";
+import {Image, StyleSheet, Text, TouchableHighlight, View, Alert} from 'react-native';
+import {List,Icon,SearchBar } from "@ant-design/react-native";
+
 const Item = List.Item;
-const Brief = Item.Brief;
+
 
 export default class ListPage extends React.Component {
-  render() {
-    return (
-      <ScrollView
-        style={{ flex: 1, backgroundColor: '#f5f5f9' }}
-        automaticallyAdjustContentInsets={false}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <List renderHeader={'basic'}>
-          <Item data-seed="logId">
-            标题文字点击无反馈，文字超长则隐藏，文字超长则隐藏
-          </Item>
-          <Item wrap>
-            文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行
-          </Item>
-          <Item disabled extra="箭头向右" arrow="horizontal" onPress={() => {}}>
-            标题文字
-          </Item>
-          <Item extra="箭头向下" arrow="down" onPress={() => {}}>
-            标题文字
-          </Item>
-          <Item extra="箭头向上" arrow="up" onPress={() => {}}>
-            标题文字
-          </Item>
-          <Item extra="没有箭头" arrow="empty">
-            标题文字
-          </Item>
-          <Item
-            extra={
-              <View>
-                内容内容
-                <Brief style={{ textAlign: 'right' }}>辅助文字内容</Brief>
-              </View>
-            }
-            multipleLine
-          >
-            垂直居中对齐
-          </Item>
-          <Item extra="内容内容" multipleLine>
-            垂直居中对齐<Brief>辅助文字内容</Brief>
-          </Item>
-          <Item
-            wrap
-            extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
-            multipleLine
-            align="top"
-            arrow="horizontal"
-          >
-            顶部对齐
-            <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
-            <Brief>辅助文字内容</Brief>
-          </Item>
-          <Item
-            extra={
-              <View>
-                内容内容
-                <Brief style={{ textAlign: 'right' }}>辅助文字内容</Brief>
-              </View>
-            }
-            multipleLine
-            align="bottom"
-          >
-            底部对齐
-          </Item>
-        </List>
-        <List renderHeader={'带缩略图'}>
-          <Item thumb="https://os.alipayobjects.com/rmsportal/mOoPurdIfmcuqtr.png">
-            thumb
-          </Item>
-          <Item
-            thumb="https://os.alipayobjects.com/rmsportal/mOoPurdIfmcuqtr.png"
-            arrow="horizontal"
-          >
-            thumb
-          </Item>
-          <Item
-            extra={
-              <Image
-                source={{
-                  uri:
-                    'https://os.alipayobjects.com/rmsportal/mOoPurdIfmcuqtr.png',
-                }}
-                style={{ width: 29, height: 29 }}
-              />
-            }
-            arrow="horizontal"
-          >
-            extra为Image
-          </Item>
-        </List>
-      </ScrollView>
-    );
+    static navigationOptions = {
+        // headerTitle: <Text style={{fontSize:16,fontWeight:"bold",color:"black"}}>添加零食</Text>,
+        // headerLeft:
+        //     <TouchableHighlight onPress={() => this.props.navigation.push('Camera')}>
+        //         <Icon name={"instagram"} size={24} color={"black"}/>
+        //     </TouchableHighlight>,
+        // headerRight:
+        //     <Text style={{fontSize:16,color:"black"}}>完成</Text>,
+        // headerStyle: {
+        //     height: 50,
+        //     flexDirection: "row",
+        //     backgroundColor: "white",
+        //     justifyContent: "space-between",
+        //     alignItems: "center",
+        //     paddingLeft:30,
+        //     paddingRight:30
+        // },
+    };
+
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      foodList:[{name:"米饭"},{name:"米饭"},{name:"米饭"},{name:"米饭"},],
+      value:"米饭"
+    }
   }
+
+  renderList(item,index){
+    return(
+        <Item
+            thumb={
+              <Image source={require('../../images/imageLeft.png')}
+                     style={{height:20,width:20,marginRight:20}}
+                     resizeMode={"contain"}/>}
+            arrow="horizontal"
+            key={index}
+        >
+          {item.name}
+        </Item>
+    )
+  }
+
+  onChange = value => {
+    this.setState({ value });
+  };
+
+  clear = () => {
+    this.setState({ value: '' });
+  };
+
+  render(){
+    let foodList = this.state.foodList.map((item,index) => this.renderList(item,index));
+    return (
+        <View>
+          <View style={styles.topBar}>
+              <TouchableHighlight onPress={() => this.props.navigation.push('Camera')}>
+                  <Icon name={"instagram"} size={24} color={"black"}/>
+              </TouchableHighlight>
+              <Text style={{fontSize:16,fontWeight:"bold",color:"black"}}>添加零食</Text>
+              <Text style={{fontSize:16,color:"black"}}>完成</Text>
+          </View>
+          <SearchBar
+              value={this.state.value}
+              placeholder="搜索"
+              onSubmit={value => Alert.alert(value)}
+              onCancel={this.clear}
+              onChange={this.onChange}
+          />
+          <List>
+            {foodList}
+          </List>
+        </View>
+    )}
 }
+
+const styles = StyleSheet.create({
+  topBar: {
+    height: 50,
+    flexDirection: "row",
+    backgroundColor: "white",
+    justifyContent: "space-between",
+    alignItems: "center",
+      paddingLeft:30,
+      paddingRight:30
+  },
+});

@@ -1,0 +1,10 @@
+<!-- 这个文件夹和文件都是我自己创建的哦，还有drawable -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/launch_screen">
+
+</LinearLayout>
+

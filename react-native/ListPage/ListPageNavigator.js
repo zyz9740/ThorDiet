@@ -1,0 +1,26 @@
+import React from 'react';
+import { View, Text, Button } from 'react-native';
+import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
+
+import ListPage from "./ListPage"
+import Camera from "./Camera"
+
+const AppNavigator = createStackNavigator(
+    {
+        Home: ListPage,
+        Camera: Camera
+    },
+    {
+        initialRouteName: "Home",
+        headerMode:"none"
+    }
+);
+
+
+const AppContainer = createAppContainer(AppNavigator);
+
+export default class ListPageNavigator extends React.Component {
+    render() {
+        return <AppContainer />;
+    }
+}
