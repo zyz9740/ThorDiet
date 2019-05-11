@@ -4,11 +4,13 @@ import { createAppContainer, createStackNavigator, StackActions, NavigationActio
 
 import ListPage from "./ListPage"
 import Camera from "./Camera"
+import ImageShow from "./ImageShow"
 
 const AppNavigator = createStackNavigator(
     {
         Home: ListPage,
-        Camera: Camera
+        Camera: Camera,
+        ImageShow:ImageShow,
     },
     {
         initialRouteName: "Home",
