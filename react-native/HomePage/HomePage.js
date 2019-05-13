@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import {Text, View, StyleSheet, TouchableHighlight,
 		NativeModules, Image, ScrollView }
 		from 'react-native';
@@ -10,14 +11,44 @@ import MealList from "./MealList"
 
 
 class HomePage extends Component {
+	static propTypes = {
+		recordList: PropTypes.object.isRequired,
+		calorieLeft: PropTypes.number.isRequired,
+		onChangeCalorieLeft:PropTypes.func.isRequired,
+	};
+
 	constructor(props){
 		super(props);
 		this.state = {
 			calendarDisplay: "none",
+			calorieLeft:0,
+			calorieStandard:1730,
+			intake:0,
+			consume:0,
 		}
 	}
 
-  toastAction(){
+	componentDidMount() {
+		//计算能量值
+		let intake = 0;
+		let consume = 0;
+		this.props.recordList.breakfast.map((item) => intake+=item.calorie);
+		this.props.recordList.lunch.map((item) => intake+=item.calorie);
+		this.props.recordList.dinner.map((item) => intake+=item.calorie);
+		this.props.recordList.snacks.map((item) => intake+=item.calorie);
+		this.props.recordList.sports.map((item) => consume+=item.calorie);
+
+		let calorieLeft = this.state.calorieStandard - intake + consume;
+		this.props.onChangeCalorieLeft(calorieLeft);
+		this.setState({
+			calorieLeft:calorieLeft,
+			intake:intake,
+			consume:consume,
+		});
+		//console.log(this.state);
+	}
+
+	_toastAction(){
   	console.log("Press");
   	ToastAndroidTest.show('Awesome', ToastAndroidTest.SHORT);
   }
@@ -52,21 +83,22 @@ class HomePage extends Component {
 				<View style={styles.inAndout}>
 					<Image style={styles.smallImage} source={require('../../images/imageLeft.png')}
 						   resizeMode={"contain"}/>
-						   <Text>摄入</Text>
+						   <Text>摄入 {this.state.intake}</Text>
 				</View>
 				<View style={styles.visualization}>
 					<Image style={styles.bigImage} source={require('../../images/fatThor.png')}
 						   resizeMode={"contain"}/>
-					<Text>还可摄入：1730 KJ</Text>
+					<Text>还可摄入：{this.state.calorieLeft} KJ</Text>
 				</View>
 				<View style={styles.inAndout}>
 					<Image style={styles.smallImage} source={require('../../images/imageRight.png')}
 						   resizeMode={"contain"}/>
-					<Text>消耗</Text>
+					<Text>消耗 {this.state.consume}</Text>
 				</View>
 			</View>
 			<View>
-				<MealList />
+				{/*<Text>h</Text>*/}
+				<MealList recordList={this.props.recordList}/>
 			</View>
 		</ScrollView>
     );

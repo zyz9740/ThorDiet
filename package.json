@@ -8,12 +8,19 @@
   },
   "dependencies": {
     "@ant-design/react-native": "^3.1.7",
+    "@react-native-community/slider": "^1.1.1",
+    "apsl-react-native-button": "^3.1.1",
+    "prop-types": "^15.7.2",
     "react": "16.8.3",
     "react-native": "0.59.5",
     "react-native-calendars": "^1.84.0",
     "react-native-camera": "^2.6.0",
+    "react-native-drawer": "^2.5.1",
     "react-native-gesture-handler": "^1.2.1",
-    "react-navigation": "^3.9.1"
+    "react-native-picker": "^4.3.7",
+    "react-native-slider": "^0.11.0",
+    "react-navigation": "^3.9.1",
+    "rn-textinputlayout": "^1.0.5"
   },
   "devDependencies": {
     "@babel/core": "7.4.3",

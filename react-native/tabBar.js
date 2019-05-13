@@ -5,12 +5,24 @@ import { Icon, SearchBar, TabBar, Button } from '@ant-design/react-native';
 import HomePage from "./HomePage/HomePage"
 import ListPageNavigator from "./ListPage/ListPageNavigator"
 import PrivatePage from "./PrivatePage/PrivatePage"
+import MealPage from "./ListPage/MealPage"
+import SnacksPage from "./ListPage/SnacksPage"
+import SportsPage from "./ListPage/SportsPage"
 
 export default class BasicTabBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedTab: 'home',
+      recordList:{
+        breakfast:[{name:"米饭",calorie:23}],
+        lunch:[{name:"米饭",calorie:23}],
+        dinner:[{name:"米饭",calorie:23}],
+        snacks:[{name:"米饭",calorie:23}],
+        sports:[{name:"米饭",calorie:23}],
+      },
+      calorieLeft:0,
+      userName:"未登录",
     };
   }
 
@@ -19,11 +31,34 @@ export default class BasicTabBar extends React.Component {
   }
 
   onChangeTab(tabName) {
-  	console.log("****");
+  	// console.log(this.state);
     this.setState({
       selectedTab: tabName,
     });
   }
+
+  _onChangeBreakfast(){
+
+  }
+
+  _onChangeLunch(){
+
+  }
+
+  _onChangeDinner(){
+
+  }
+
+  _onChangeCalorieLeft(value){
+    this.setState({
+      calorieLeft:value,
+    })
+  }
+
+  onUserLogin(username){
+    this.setState({username:username});
+  }
+
   render() {
     return (
       <TabBar
@@ -38,7 +73,10 @@ export default class BasicTabBar extends React.Component {
           selected={this.state.selectedTab === 'home'}
           onPress={() => this.onChangeTab('home')}
         >
-          <HomePage />
+          <HomePage
+            recordList={this.state.recordList}
+            calorieLeft={this.state.calorieLeft}
+            onChangeCalorieLeft={() => this._onChangeCalorieLeft}/>
         </TabBar.Item>
         <TabBar.Item
             icon={require("../images/meal.png")}
@@ -47,7 +85,7 @@ export default class BasicTabBar extends React.Component {
             selected={this.state.selectedTab === 'meal'}
             onPress={this.onChangeTab.bind(this,'meal')}
         >
-          <ListPageNavigator />
+          <MealPage/>
         </TabBar.Item>
         <TabBar.Item
           icon={require("../images/food.png")}
@@ -56,7 +94,7 @@ export default class BasicTabBar extends React.Component {
           selected={this.state.selectedTab === 'food'}
           onPress={this.onChangeTab.bind(this,'food')}
         >
-          <ListPageNavigator />
+          <SnacksPage />
         </TabBar.Item>
         <TabBar.Item
           icon={require("../images/sport.png")}
@@ -65,7 +103,7 @@ export default class BasicTabBar extends React.Component {
           selected={this.state.selectedTab === 'sport'}
           onPress={() => this.onChangeTab('sport')}
         >
-          <ListPageNavigator />
+          <SportsPage />
         </TabBar.Item>
         <TabBar.Item
           icon={require("../images/person.png")}
@@ -74,7 +112,9 @@ export default class BasicTabBar extends React.Component {
           selected={this.state.selectedTab === 'person'}
           onPress={() => this.onChangeTab('person')}
         >
-          <PrivatePage />
+          <PrivatePage calorieLeft={this.state.calorieLeft}
+                        recordList={this.state.recordList}
+                        onUserLogin={() => this.onUserLogin}/>
         </TabBar.Item>
       </TabBar>
     );
