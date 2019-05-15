@@ -30,8 +30,8 @@ export default class Login extends Component{
 
     //??为什么他用箭头函数不行？？？？
     _onPressSubmit(){
-        console.log("state:");
-        console.log(this.state);
+        // console.log("state:");
+        // console.log(this.state);
         this.props.onUserLogin(this.state.username);
         this.props.closeDrawer();
     };
@@ -49,9 +49,9 @@ export default class Login extends Component{
                     <TextInput
                         style={styles.textInput}
                         placeholder={'用户名'}
-                        onSubmitEditing={(event) => this.setState({username:event.nativeEvent.text})}
-                        //onChange={(value) => this.setState({username:value})}
-                        // value={this.state.username}
+                        // onSubmitEditing={(event) => this.setState({username:event.nativeEvent.text})}
+                        onChangeText={(value) => this.setState({username:value})}
+                        value={this.state.username}
                     />
                 </TextInputLayout>
                 <TextInputLayout style={styles.inputLayout}>
@@ -59,9 +59,9 @@ export default class Login extends Component{
                         style={styles.textInput}
                         placeholder={'密码'}
                         secureTextEntry={true}
-                        onSubmitEditing={(event) => this.setState({password:event.nativeEvent.text})}
-                        //onChange={(value) => this.setState({password:value})}
-                        // value={this.state.password}
+                        // onSubmitEditing={(event) => this.setState({password:event.nativeEvent.text})}
+                        onChangeText={(value) => this.setState({password:value})}
+                        value={this.state.password}
                     />
                 </TextInputLayout>
                 <View style={styles.buttonLayout}>

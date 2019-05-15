@@ -2,20 +2,27 @@ import React from "react";
 import {Image, StyleSheet, Text, TouchableHighlight, View, Alert, Picker} from 'react-native';
 import {List,Icon,SearchBar } from "@ant-design/react-native";
 import Drawer from 'react-native-drawer'
+import PropTypes from 'prop-types'
+
 
 const Item = List.Item;
 
 import Weight from './Weight'
+import ToastAndroidTest from "./ToastAndroidTest"
+
 
 export default class SportsPage extends React.Component {
+    static propTypes = {
+        addFood:PropTypes.func.isRequired,
+    };
 
     constructor(props) {
         super(props);
         this.state = {
             foodList:[],
-            value:"米饭",
+            // value:"米饭",
             openDrawerIndex:0,
-            mealType:"运动",
+            mealType:"",
         }
     }
     componentWillMount() {
@@ -87,6 +94,32 @@ export default class SportsPage extends React.Component {
         // console.log(this.state.openDrawerIndex);
         this.drawer.open();
     }
+    onCloseDrawer = () => {
+        this.drawer.close();
+    };
+
+    addFood = (record) => {
+        // console.log("record:");
+        // console.log(record);
+        this.props.addFood(record);
+    };
+
+    // _onSearch = (value) => {
+    //     console.log(value);
+    //     let openDrawerIndex = -1;
+    //     for(let index=0;index<this.state.foodList.length;index++){
+    //         if(this.state.foodList[index].name === value){
+    //             console.log(index);
+    //             openDrawerIndex = index;
+    //             break;
+    //         }
+    //     }
+    //     if(openDrawerIndex!=-1){
+    //         this.openDrawer("",openDrawerIndex);
+    //     }else{
+    //         ToastAndroidTest.show("未找到指定物品", ToastAndroidTest.SHORT);
+    //     }
+    // };
 
     renderList(item,index){
         return(
@@ -103,21 +136,8 @@ export default class SportsPage extends React.Component {
             </Item>
         )
     }
-
-    onChange = value => {
-        this.setState({ value });
-    };
-
-    clear = () => {
-        this.setState({ value: '' });
-    };
-
-    onCloseDrawer = () => {
-        this.drawer.close();
-    };
-
     render(){
-        console.log(this.state);
+        // console.log(this.state);
         let foodList = this.state.foodList.map((item,index) => this.renderList(item,index));
         let foodSelected = this.state.foodList[this.state.openDrawerIndex];
         return (
@@ -133,7 +153,8 @@ export default class SportsPage extends React.Component {
                 })}
                 content={<Weight foodSelected={foodSelected}
                                  onCloseDrawer={this.onCloseDrawer}
-                                 mealType={this.state.mealType} />}
+                                 mealType={this.state.mealType}
+                                 addFood={this.addFood}/>}
                 initializeOpen={false}
                 side={"bottom"}
             >
@@ -142,16 +163,26 @@ export default class SportsPage extends React.Component {
                         <TouchableHighlight onPress={() => this.props.navigation.push('Camera')}>
                             <Icon name={"instagram"} size={24} color={"black"}/>
                         </TouchableHighlight>
-                        <Text style={{fontSize:16,fontWeight:"bold",color:"black"}}>添加运动</Text>
+                        <Text style={styles.topText}>添加运动</Text>
+                        {/*<View style={styles.pickerContainer}>*/}
+                        {/*    <Picker*/}
+                        {/*        androidmode="dialog"*/}
+                        {/*        selectedValue={this.state.mealType}*/}
+                        {/*        onValueChange={(value) => this.setState({mealType:value})} >*/}
+                        {/*        <Picker.Item label="添加早餐" value="早餐" />*/}
+                        {/*        <Picker.Item label="添加午餐" value="午餐" />*/}
+                        {/*        <Picker.Item label="添加晚餐" value="晚餐" />*/}
+                        {/*    </Picker>*/}
+                        {/*</View>*/}
                         <Text style={{fontSize:16,color:"black"}}>完成</Text>
                     </View>
-                    <SearchBar
-                        value={this.state.value}
-                        placeholder="搜索"
-                        onSubmit={value => Alert.alert(value)}
-                        onCancel={this.clear}
-                        onChange={this.onChange}
-                    />
+                    {/*<SearchBar*/}
+                    {/*    value={this.state.value}*/}
+                    {/*    placeholder="搜索食品"*/}
+                    {/*    onSubmit={(value) => this._onSearch(value)}*/}
+                    {/*    onCancel={() => {this.setState({ value: '' });}}*/}
+                    {/*    onChange={() => {this.setState({ value });}}*/}
+                    {/*/>*/}
                     <List>
                         {foodList}
                     </List>
@@ -173,5 +204,9 @@ const styles = StyleSheet.create({
     pickerContainer:{
         width:100,
         height:40,
+    },
+    topText:{
+        fontSize:15,
+        color:"black",
     }
 });

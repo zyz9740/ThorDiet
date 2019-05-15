@@ -23,25 +23,27 @@ export default class MealList extends React.Component {
 
     renderList(item,index){
         return(
-            <Item
-                // thumb={
-                //     <Image source={require('../../images/imageLeft.png')}
-                //            style={{height:20,width:20,marginRight:20}}
-                //            resizeMode={"contain"}/>}
-                key={index}
-
-            >
+            <Item key={index}>
                 <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                     <Text>{item.name}</Text>
-                    <Text>{item.calorie} kJ</Text>
+                    <View style={{flexDirection:"row"}}>
+                        <Text> {item.quantity} </Text>
+                        <Text> {item.unitName} </Text>
+                        <Text>, 共 {item.calorie} kJ </Text>
+                    </View>
                 </View>
             </Item>
         )
     }
 
     renderEmptyList(){
-        let emptyInfo = {name:"添加食物"};
-        return this.renderList(emptyInfo,0);
+        return(
+            <Item key={0}>
+                <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                    <Text>暂无</Text>
+                </View>
+            </Item>
+        )
     }
 
     render(){

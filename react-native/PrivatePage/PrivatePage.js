@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native";
 import {List,Button} from "@ant-design/react-native";
 import PropTypes from 'prop-types'
 import Drawer from 'react-native-drawer'
 
 import Login from "./Login"
+// import Statistics from "./Statistics"
 
 const Item = List.Item;
 
@@ -13,12 +14,13 @@ export default class PrivatePage extends Component{
         recordList: PropTypes.object.isRequired,
         calorieLeft: PropTypes.number.isRequired,
         onUserLogin: PropTypes.func.isRequired,
+        username:   PropTypes.string.isRequired,
     };
 
     constructor(props){
         super(props);
         this.state = {
-            username:"未登录",
+            username:this.props.username,
         }
     }
 
@@ -32,9 +34,10 @@ export default class PrivatePage extends Component{
     };
 
     onUserLogin(username){
-
         this.setState({username:username});
         this.props.onUserLogin(username);
+        console.log(this.state);
+
     };
 
     render(){
@@ -54,10 +57,12 @@ export default class PrivatePage extends Component{
                 initializeOpen={false}
                 side={"bottom"}
             >
-                <View style={styles.avatar}>
-                    <Image style={styles.roundImage} source={require("../../images/fatThor.png")} />
-                    <Text style={{marginTop: 30,color:"white"}}>{this.state.username}</Text>
-                </View>
+                <TouchableWithoutFeedback onPress={this._openDrawer}>
+                    <View style={styles.avatar}>
+                        <Image style={styles.roundImage} source={require("../../images/fatThor.png")} />
+                        <Text style={{marginTop: 30,color:"white"}}>{this.state.username}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
                 <View>
                     <List>
                         <Item
@@ -67,7 +72,7 @@ export default class PrivatePage extends Component{
                                        resizeMode={"contain"}/>}
                             arrow="horizontal"
                             key="1"
-                            onPress={this._openDrawer}
+                            // onPress={this._openDrawer}
                         >
                             每日计划
                         </Item>

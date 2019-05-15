@@ -6,7 +6,7 @@ import {Text, View, StyleSheet, TouchableHighlight,
 import { Button, WhiteSpace, WingBlank, Icon } from '@ant-design/react-native';
 
 import MyCalendar from "./MyCalendar";
-import ToastAndroidTest from './ToastAndroidTest';
+// import ToastAndroidTest from '../ListPage/ToastAndroidTest';
 import MealList from "./MealList"
 
 
@@ -47,11 +47,6 @@ class HomePage extends Component {
 		});
 		//console.log(this.state);
 	}
-
-	_toastAction(){
-  	console.log("Press");
-  	ToastAndroidTest.show('Awesome', ToastAndroidTest.SHORT);
-  }
 
 
   _onPressDateSelector = () => {

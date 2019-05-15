@@ -3,6 +3,7 @@ import {Image, Text, View, StyleSheet, Picker, TouchableWithoutFeedback} from "r
 import Slider from "react-native-slider";
 import PropTypes from 'prop-types'
 
+import ToastAndroidTest from "./ToastAndroidTest"
 
 
 
@@ -12,6 +13,7 @@ export default class Weight extends React.Component {
         foodSelected:PropTypes.object.isRequired,
         onCloseDrawer:PropTypes.func.isRequired,
         mealType:PropTypes.string.isRequired,
+        addFood:PropTypes.func.isRequired,
     };
 
     constructor(props){
@@ -39,17 +41,47 @@ export default class Weight extends React.Component {
     }
 
     _onChangeUnit(itemPosition){
+        //如果不是克的话就改变
         if(itemPosition!=0) {
             let unit = this.props.foodSelected.unitList[itemPosition-1];
             this.setState({
+                sliderValue:0,
                 unit: unit,
             });
-            console.log(this.state);
+        }else{
+            let unit = {
+                unitName: "克",
+                gramPerUnit: 1,
+                upperLimit: 1000,
+                step: 10
+            };
+            this.setState({
+                unit:unit,
+                sliderValue:0,
+            });
+            // console.log(this.state);
         }
     }
 
-    _onSubmit = () => {
-        console.log(this.state);
+
+    _onSubmit = () =>{
+        // console.log("props:");
+        // console.log(this.props);
+
+        if(this.state.calorieSum != 0) {
+            let record = {
+                name: this.props.foodSelected.name,
+                calorie: this.state.calorieSum,
+                unitName: this.state.unit.unitName,
+                quantity: this.state.sliderValue,
+                mealType:this.props.mealType,
+            };
+            ToastAndroidTest.show('添加'+this.props.mealType+'成功', ToastAndroidTest.SHORT);
+            let recordContent = this.props.foodSelected.name + " : " +
+                this.state.sliderValue + ' ' + this.state.unit.unitName;
+            ToastAndroidTest.show(recordContent, ToastAndroidTest.SHORT);
+            this.props.addFood(record);
+        }
         this.props.onCloseDrawer();
     };
 
@@ -71,7 +103,7 @@ export default class Weight extends React.Component {
                         <Text style={{marginHorizontal:10,}}>{this.props.mealType}</Text>
                     </View>
                     <TouchableWithoutFeedback
-                        onPress={this._onSubmit} >
+                        onPress={this.props.onCloseDrawer} >
                         <Text>取消</Text>
                     </TouchableWithoutFeedback>
                 </View>
@@ -90,7 +122,7 @@ export default class Weight extends React.Component {
                         step={this.state.unit.step}
                         thumbTintColor='#33A3F4'
                         minimumTrackTintColor="#33A3F4"
-                        value={this.state.value}
+                        value={this.state.sliderValue}
                         onValueChange={value => this.setState({
                             sliderValue:value,
                             calorieSum: value * this.props.foodSelected.caloriePerGram * this.state.unit.gramPerUnit,

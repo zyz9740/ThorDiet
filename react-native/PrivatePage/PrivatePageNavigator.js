@@ -1,17 +1,13 @@
 import React from 'react';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 
-import ListPage from "./ListPage"
-import Camera from "./Camera"
-import ImageShow from "./ImageShow"
-import MealPage from "./MealPage"
-import SnacksPage from "./SnacksPage"
+import PrivatePage from "./PrivatePage"
+import Statistics from "./Statistics"
 
 const AppNavigator = createStackNavigator(
     {
-        Home: ListPage,
-        Camera: Camera,
-        ImageShow:ImageShow,
+        Home: PrivatePage,
+        Statistics:Statistics,
     },
     {
         initialRouteName: "Home",
@@ -22,7 +18,7 @@ const AppNavigator = createStackNavigator(
 
 const AppContainer = createAppContainer(AppNavigator);
 
-export default class ListPageNavigator extends React.Component {
+export default class PrivatePageNavigator extends React.Component {
     render() {
         return <AppContainer />;
     }
