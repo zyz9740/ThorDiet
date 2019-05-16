@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import Drawer from 'react-native-drawer'
 
 import Login from "./Login"
-// import Statistics from "./Statistics"
+import Statistics from "./Statistics"
 
 const Item = List.Item;
 
@@ -15,7 +15,9 @@ export default class PrivatePage extends Component{
         calorieLeft: PropTypes.number.isRequired,
         onUserLogin: PropTypes.func.isRequired,
         username:   PropTypes.string.isRequired,
+        // openStatistics: PropTypes.func.isRequired,
     };
+
 
     constructor(props){
         super(props);
@@ -38,6 +40,11 @@ export default class PrivatePage extends Component{
         this.props.onUserLogin(username);
         console.log(this.state);
 
+    };
+
+    openStatistics = () =>{
+        // console.log(this.props);
+        this.props.openStatistics();
     };
 
     render(){
@@ -72,7 +79,7 @@ export default class PrivatePage extends Component{
                                        resizeMode={"contain"}/>}
                             arrow="horizontal"
                             key="1"
-                            // onPress={this._openDrawer}
+                            onPress={this.openStatistics}
                         >
                             每日计划
                         </Item>

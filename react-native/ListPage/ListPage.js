@@ -1,5 +1,13 @@
 import React from "react";
-import {Image, StyleSheet, Text, TouchableHighlight, View, Alert, Picker} from 'react-native';
+import {
+    Image,
+    StyleSheet,
+    Text,
+    View,
+    Alert,
+    Picker,
+    TouchableWithoutFeedback
+} from 'react-native';
 import {List,Icon,SearchBar } from "@ant-design/react-native";
 import Drawer from 'react-native-drawer'
 import PropTypes from 'prop-types'
@@ -175,9 +183,9 @@ export default class ListPage extends React.Component {
                 <View>
                     <View style={styles.topBar}>
                         {this.props.haveCamera?
-                            <TouchableHighlight onPress={this.openCamera}>
+                            <TouchableWithoutFeedback onPress={this.openCamera}>
                                 <Icon name={"instagram"} size={24} color={"black"}/>
-                            </TouchableHighlight>
+                            </TouchableWithoutFeedback>
                             : <Text style={{color:"white"}}>占位</Text>
                         }
                         {this.props.havePicker?

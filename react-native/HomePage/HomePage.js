@@ -64,6 +64,7 @@ class HomePage extends Component {
 			style={{ flex: 1 }}
 			showsVerticalScrollIndicator={true}
 		>
+
 			<View style={styles.topBar}>
 				<TouchableHighlight onPress={this._onPressDateSelector}>
 					<View style={styles.dateSelector}>
@@ -118,8 +119,6 @@ const styles = StyleSheet.create({
 		borderRadius: 25,
 		justifyContent: "center",
 		alignItems: "center",
-	},
-	mainView:{
 	},
 	statistics:{
 		backgroundColor:"#33A3F4",

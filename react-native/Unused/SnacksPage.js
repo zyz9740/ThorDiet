@@ -1,17 +1,17 @@
 import React from "react";
 import {Image, StyleSheet, Text, TouchableHighlight, View, Alert, Picker} from 'react-native';
-import {List,Icon,SearchBar } from "@ant-design/react-native";
+import {List,Icon,SearchBar } from "@ant-design/react-native/lib/index";
 import Drawer from 'react-native-drawer'
 import PropTypes from 'prop-types'
 
 
 const Item = List.Item;
 
-import Weight from './Weight'
-import ToastAndroidTest from "./ToastAndroidTest"
+import Weight from '../ListPage/Weight'
+import ToastAndroidTest from "../ListPage/ToastAndroidTest"
 
 
-export default class MealPage extends React.Component {
+export default class SnacksPage extends React.Component {
     static propTypes = {
         addFood:PropTypes.func.isRequired,
     };
@@ -69,19 +69,9 @@ export default class MealPage extends React.Component {
                 ]
             }
         ];
-        //根据时间确定现在是吃什么的时间
-        let hour = new Date().getHours();
-        let mealType;
-        if(hour < 10 && hour > 5){
-            mealType = "早餐";
-        }else if(hour >= 10 && hour <= 14){
-            mealType = "午餐";
-        }else{
-            mealType = "晚餐";
-        }
         this.setState({
             foodList:foodList,
-            mealType:mealType,
+            mealType:"零食",
         });
 
     }
@@ -163,16 +153,17 @@ export default class MealPage extends React.Component {
                         <TouchableHighlight onPress={() => this.props.navigation.push('Camera')}>
                             <Icon name={"instagram"} size={24} color={"black"}/>
                         </TouchableHighlight>
-                        <View style={styles.pickerContainer}>
-                            <Picker
-                                androidmode="dialog"
-                                selectedValue={this.state.mealType}
-                                onValueChange={(value) => this.setState({mealType:value})} >
-                                <Picker.Item label="添加早餐" value="早餐" />
-                                <Picker.Item label="添加午餐" value="午餐" />
-                                <Picker.Item label="添加晚餐" value="晚餐" />
-                            </Picker>
-                        </View>
+                        <Text style={styles.topText}>添加零食</Text>
+                        {/*<View style={styles.pickerContainer}>*/}
+                        {/*    <Picker*/}
+                        {/*        androidmode="dialog"*/}
+                        {/*        selectedValue={this.state.mealType}*/}
+                        {/*        onValueChange={(value) => this.setState({mealType:value})} >*/}
+                        {/*        <Picker.Item label="添加早餐" value="早餐" />*/}
+                        {/*        <Picker.Item label="添加午餐" value="午餐" />*/}
+                        {/*        <Picker.Item label="添加晚餐" value="晚餐" />*/}
+                        {/*    </Picker>*/}
+                        {/*</View>*/}
                         <Text style={{fontSize:16,color:"black"}}>完成</Text>
                     </View>
                     {/*<SearchBar*/}
@@ -203,5 +194,9 @@ const styles = StyleSheet.create({
     pickerContainer:{
         width:100,
         height:40,
+    },
+    topText:{
+        fontSize:15,
+        color:"black",
     }
 });

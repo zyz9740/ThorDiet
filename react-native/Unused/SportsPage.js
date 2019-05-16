@@ -1,14 +1,14 @@
 import React from "react";
 import {Image, StyleSheet, Text, TouchableHighlight, View, Alert, Picker} from 'react-native';
-import {List,Icon,SearchBar } from "@ant-design/react-native";
+import {List,Icon,SearchBar } from "@ant-design/react-native/lib/index";
 import Drawer from 'react-native-drawer'
 import PropTypes from 'prop-types'
 
 
 const Item = List.Item;
 
-import Weight from './Weight'
-import ToastAndroidTest from "./ToastAndroidTest"
+import Weight from '../ListPage/Weight'
+import ToastAndroidTest from "../ListPage/ToastAndroidTest"
 
 
 export default class SportsPage extends React.Component {

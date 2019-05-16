@@ -102,6 +102,10 @@ export default class BasicTabBar extends React.Component {
 
     openCamera = () => {
         this.props.navigation.push('Camera')
+    };
+
+    openStatistics = () => {
+        this.props.navigation.push('Statistics')
     }
 
     onUserLogin(username){
@@ -161,7 +165,8 @@ export default class BasicTabBar extends React.Component {
                         mealType="零食"
                         haveCamera={true}
                         havePicker={false}
-                        foodListURL={"test.php"}/>
+                        foodListURL={"test.php"}
+                        openCamera={this.openCamera} />
           </TabBar.Item>
           <TabBar.Item
             icon={require("../images/sport.png")}
@@ -193,7 +198,8 @@ export default class BasicTabBar extends React.Component {
                            sports:this.state.sports,
                          }}
                          onUserLogin={(username) => this.onUserLogin(username)}
-                         username={this.state.username}/>
+                         username={this.state.username}
+                         openStatistics={this.openStatistics}/>
           </TabBar.Item>
         </TabBar>
       );

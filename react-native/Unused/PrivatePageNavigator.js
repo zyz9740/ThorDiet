@@ -1,8 +1,8 @@
 import React from 'react';
-import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
+import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation/typescript/react-navigation';
 
-import PrivatePage from "./PrivatePage"
-import Statistics from "./Statistics"
+import PrivatePage from "../PrivatePage/PrivatePage"
+import Statistics from "../PrivatePage/Statistics"
 
 const AppNavigator = createStackNavigator(
     {

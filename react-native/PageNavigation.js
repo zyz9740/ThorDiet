@@ -5,6 +5,7 @@ import BasicTabBar from "./tabBar"
 import Camera from "./ListPage/Camera"
 import ImageShow from "./ListPage/ImageShow"
 import ListPage from "./ListPage/ListPage"
+import Statistics from "./PrivatePage/Statistics"
 
 const AppNavigator = createStackNavigator(
     {
@@ -12,6 +13,7 @@ const AppNavigator = createStackNavigator(
         ListPage: ListPage,
         Camera: Camera,
         ImageShow:ImageShow,
+        Statistics: Statistics,
     },
     {
         initialRouteName: "Home",

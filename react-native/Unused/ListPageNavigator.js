@@ -1,11 +1,11 @@
 import React from 'react';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation/typescript/react-navigation';
 
-import ListPage from "../ListPage"
-import Camera from "../Camera"
-import ImageShow from "../ImageShow"
-import MealPage from "../MealPage"
-import SnacksPage from "../SnacksPage"
+import ListPage from "../ListPage/ListPage"
+import Camera from "../ListPage/Camera"
+import ImageShow from "../ListPage/ImageShow"
+import MealPage from "./MealPage"
+import SnacksPage from "./SnacksPage"
 
 const AppNavigator = createStackNavigator(
     {
