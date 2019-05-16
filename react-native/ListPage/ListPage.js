@@ -130,6 +130,11 @@ export default class ListPage extends React.Component {
     //     }
     // };
 
+    openCamera = () =>{
+        // console.log(this.props);
+        this.props.openCamera();
+    };
+
     renderList(item,index){
         return(
             <Item
@@ -170,7 +175,7 @@ export default class ListPage extends React.Component {
                 <View>
                     <View style={styles.topBar}>
                         {this.props.haveCamera?
-                            <TouchableHighlight onPress={() => this.props.navigation.push('Camera')}>
+                            <TouchableHighlight onPress={this.openCamera}>
                                 <Icon name={"instagram"} size={24} color={"black"}/>
                             </TouchableHighlight>
                             : <Text style={{color:"white"}}>占位</Text>

@@ -4,11 +4,8 @@ import { Icon, SearchBar, TabBar, Button } from '@ant-design/react-native';
 
 import HomePage from "./HomePage/HomePage"
 import PrivatePage from "./PrivatePage/PrivatePage"
-import ListPageNavigator from "./ListPage/ListPageNavigator"
 import ListPage from "./ListPage/ListPage"
-import MealPage from "./ListPage/MealPage"
-import SnacksPage from "./ListPage/SnacksPage"
-import SportsPage from "./ListPage/SportsPage"
+
 
 export default class BasicTabBar extends React.Component {
     constructor(props) {
@@ -103,6 +100,10 @@ export default class BasicTabBar extends React.Component {
       })
     }
 
+    openCamera = () => {
+        this.props.navigation.push('Camera')
+    }
+
     onUserLogin(username){
       this.setState({username:username});
     }
@@ -141,11 +142,12 @@ export default class BasicTabBar extends React.Component {
               onPress={this.onChangeTab.bind(this,'meal')}
           >
             {/*<MealPage addFood={this._onChangeFoodList}/>*/}
-            <ListPageNavigator addFood={this._onChangeFoodList}
+            <ListPage addFood={this._onChangeFoodList}
                       mealType=""
                       haveCamera={true}
                       havePicker={true}
-                      foodListURL={"test.php"}/>
+                      foodListURL={"test.php"}
+                      openCamera={this.openCamera}/>
           </TabBar.Item>
           <TabBar.Item
             icon={require("../images/food.png")}

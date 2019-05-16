@@ -7,12 +7,13 @@
  */
 
 import React, { Component } from 'react';
-import BasicTabBar from "./react-native/tabBar.js"
+// import BasicTabBar from "./react-native/tabBar.js"
+import PageNavigation from "./react-native/PageNavigation"
 
 class App extends Component {
   render() {
     return (
-    	<BasicTabBar/>
+    	<PageNavigation />
     );
   }
 }
