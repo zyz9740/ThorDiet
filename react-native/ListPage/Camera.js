@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, TouchableOpacity, View,Image } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { Icon } from "@ant-design/react-native";
+import ImagePicker from 'react-native-image-picker';
+import ImageToGallery from "./ImageToGallery";
 
 
 export default class Camera extends Component {
@@ -18,13 +20,14 @@ export default class Camera extends Component {
     render() {
         return (
             <View style={styles.container}>
+
                 <RNCamera
                     ref={ref => {
                         this.camera = ref;
                     }}
                     style={styles.preview}
                     type={this.state.type}
-                    flashMode={RNCamera.Constants.FlashMode.on}
+                    flashMode={RNCamera.Constants.FlashMode.auto}
                     androidCameraPermissionOptions={{
                         title: 'Permission to use camera',
                         message: 'We need your permission to use your camera',
@@ -42,8 +45,8 @@ export default class Camera extends Component {
                     }}
                 />
                 <View style={styles.operation}>
-                    <TouchableOpacity onPress={this.changeType.bind(this)}>
-                        <Icon name="sync" color="white"></Icon>
+                    <TouchableOpacity onPress={this.loadAlbum.bind(this)}>
+                        <Icon name="picture" color="white"></Icon>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
                         <Icon name="camera" color="white"></Icon>
@@ -52,9 +55,32 @@ export default class Camera extends Component {
                         <Text style={{ fontSize: 14,color:"white" }}>取消</Text>
                     </TouchableOpacity>
                 </View>
-                {/*<Image source={{uri:this.state.imageURI}}/>*/}
+                <View style={styles.operation_top}>
+                    <TouchableOpacity onPress={this.changeType.bind(this)}>
+                        <Icon name="sync" color="white"></Icon>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
+    }
+
+    loadAlbum(){
+        ImagePicker.launchImageLibrary({}, (response) => {
+            // console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else {
+                this.props.navigation.push('ImageShow',{
+                    'imageURI':response.uri,
+                    "base64":response.data,
+                    mealType:   this.props.navigation.state.params.mealType,
+                    addFood: this.props.navigation.state.params.addFood,
+                });
+            }
+        });
     }
 
     changeType(){
@@ -72,16 +98,23 @@ export default class Camera extends Component {
 
     takePicture = async function() {
         if (this.camera) {
-            const options = { quality: 0.5, base64: true };
+            const options = { quality: 0.5, base64: true, mirrorImage:true };
             const data = await this.camera.takePictureAsync(options);
             this.setState({
                 imageURI: data.uri,
             });
-            //console.log(data.uri);
+            console.log("base64:",data.base64);
+
             //获取屏幕长宽比
             const res = await this.camera.getSupportedRatiosAsync();
             console.log(res);
-            this.props.navigation.push('ImageShow',{'imageURI':data.uri,"base64":data.base64});
+            ImageToGallery.save(data.base64);
+            this.props.navigation.push('ImageShow',{
+                'imageURI':data.uri,
+                "base64":data.base64,
+                mealType:   this.props.navigation.state.params.mealType,
+                addFood: this.props.navigation.state.params.addFood,
+            });
         }
     };
 }
@@ -96,6 +129,15 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
+    },
+    operation_top:{
+        flex: 0,
+        flexDirection: 'row',
+        justifyContent: "center",
+        alignItems:"center",
+        position:"absolute",
+        bottom: 160,
+        alignSelf: 'center',
     },
     operation:{
         flex: 0,

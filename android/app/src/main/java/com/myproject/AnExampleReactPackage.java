@@ -31,6 +31,8 @@ public class AnExampleReactPackage implements ReactPackage {
     modules.add(new ToastModule(reactContext));
     //封面图
     modules.add(new ModuleHideSplash(reactContext));
+    //保存图片
+    modules.add(new ImageToGallery(reactContext));
 
     return modules;
   }

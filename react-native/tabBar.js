@@ -108,6 +108,16 @@ export default class BasicTabBar extends React.Component {
         this.props.navigation.push('Statistics')
     }
 
+    openLogin = () => {
+        this.props.navigation.push("Login")
+    }
+
+    openRegister = (onUserRegister) => {
+        this.props.navigation.push("Register",{
+            onUserRegister: onUserRegister
+        })
+    }
+
     onUserLogin(username){
       this.setState({username:username});
     }
@@ -199,7 +209,9 @@ export default class BasicTabBar extends React.Component {
                          }}
                          onUserLogin={(username) => this.onUserLogin(username)}
                          username={this.state.username}
-                         openStatistics={this.openStatistics}/>
+                         openStatistics={this.openStatistics}
+                         openLogin={this.openLogin}
+                         openRegister={this.openRegister}/>
           </TabBar.Item>
         </TabBar>
       );

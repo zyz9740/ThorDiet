@@ -8,18 +8,21 @@ import {
     Picker,
     TouchableWithoutFeedback
 } from 'react-native';
-import {List,Icon,SearchBar } from "@ant-design/react-native";
+import {List,Icon,SearchBar,Modal } from "@ant-design/react-native";
 import Drawer from 'react-native-drawer'
 import PropTypes from 'prop-types'
-
+import { withNavigation } from 'react-navigation';
 
 const Item = List.Item;
 
+
 import Weight from './Weight'
 import ToastAndroidTest from "./ToastAndroidTest"
+import Button from "@ant-design/react-native/es/button";
+import Provider from "@ant-design/react-native/es/provider";
 
 
-export default class ListPage extends React.Component {
+class ListPage extends React.Component {
     static propTypes = {
         addFood:PropTypes.func.isRequired,
         mealType:PropTypes.string.isRequired,
@@ -32,11 +35,12 @@ export default class ListPage extends React.Component {
         super(props);
         this.state = {
             foodList:[],
-            // value:"米饭",
             openDrawerIndex:0,
             mealType:"",
+            modalVisible:false,
         }
     }
+
     componentWillMount() {
         //获取数据并初始化
         let foodList = [
@@ -121,26 +125,13 @@ export default class ListPage extends React.Component {
         this.props.addFood(record);
     };
 
-    // _onSearch = (value) => {
-    //     console.log(value);
-    //     let openDrawerIndex = -1;
-    //     for(let index=0;index<this.state.foodList.length;index++){
-    //         if(this.state.foodList[index].name === value){
-    //             console.log(index);
-    //             openDrawerIndex = index;
-    //             break;
-    //         }
-    //     }
-    //     if(openDrawerIndex!=-1){
-    //         this.openDrawer("",openDrawerIndex);
-    //     }else{
-    //         ToastAndroidTest.show("未找到指定物品", ToastAndroidTest.SHORT);
-    //     }
-    // };
-
     openCamera = () =>{
         // console.log(this.props);
-        this.props.openCamera();
+        // this.props.openCamera();
+        this.props.navigation.push('Camera',{
+            mealType: this.state.mealType,
+            addFood: this.props.addFood
+        })
     };
 
     renderList(item,index){
@@ -201,7 +192,7 @@ export default class ListPage extends React.Component {
                             </View>
                             :<Text style={styles.topText}>添加{this.props.mealType}</Text>
                         }
-                        <Text style={{fontSize:16,color:"black"}}>完成</Text>
+                        <Text style={{fontSize:16,color:"white"}}>完成</Text>
                     </View>
                     {/*<SearchBar*/}
                     {/*    value={this.state.value}*/}
@@ -237,3 +228,5 @@ const styles = StyleSheet.create({
         color:"black",
     }
 });
+
+export default withNavigation(ListPage)

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import {Text, View, StyleSheet, TouchableHighlight,
-		NativeModules, Image, ScrollView }
-		from 'react-native';
+import {
+	Text, View, StyleSheet, TouchableHighlight,
+	NativeModules, Image, ScrollView, ImageBackground
+}
+	from 'react-native';
 import { Button, WhiteSpace, WingBlank, Icon } from '@ant-design/react-native';
 
 import MyCalendar from "./MyCalendar";
@@ -25,10 +27,11 @@ class HomePage extends Component {
 			calorieStandard:1730,
 			intake:0,
 			consume:0,
+			// whichThor:'../../images/hungryThor.png'
 		}
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		//计算能量值
 		let intake = 0;
 		let consume = 0;
@@ -44,8 +47,8 @@ class HomePage extends Component {
 			calorieLeft:calorieLeft,
 			intake:intake,
 			consume:consume,
+
 		});
-		//console.log(this.state);
 	}
 
 
@@ -64,7 +67,7 @@ class HomePage extends Component {
 			style={{ flex: 1 }}
 			showsVerticalScrollIndicator={true}
 		>
-
+			<ImageBackground style={{flex:1}} source={require("../../images/bg_1.jpg")}>
 			<View style={styles.topBar}>
 				<TouchableHighlight onPress={this._onPressDateSelector}>
 					<View style={styles.dateSelector}>
@@ -79,19 +82,27 @@ class HomePage extends Component {
 				<View style={styles.inAndout}>
 					<Image style={styles.smallImage} source={require('../../images/imageLeft.png')}
 						   resizeMode={"contain"}/>
-						   <Text>摄入 {this.state.intake}</Text>
+					<View style={styles.text}>
+						   <Text style={{color:"black",padding: 5}}>{this.state.intake}</Text>
+					</View>
 				</View>
 				<View style={styles.visualization}>
-					<Image style={styles.bigImage} source={require('../../images/fatThor.png')}
+					<Image style={styles.bigImage} source={require("../../images/hungryThor.png")}
 						   resizeMode={"contain"}/>
-					<Text>还可摄入：{this.state.calorieLeft} KJ</Text>
+						   <View style={styles.text}>
+								<Text style={{color:"black", padding: 5}}>还可摄入：{this.state.calorieLeft} KJ</Text>
+						   </View>
 				</View>
 				<View style={styles.inAndout}>
 					<Image style={styles.smallImage} source={require('../../images/imageRight.png')}
 						   resizeMode={"contain"}/>
-					<Text>消耗 {this.state.consume}</Text>
+					<View style={styles.text}>
+						<Text style={{color:"black", padding: 5}}>{this.state.consume}</Text>
+					</View>
 				</View>
 			</View>
+			</ImageBackground>
+
 			<View>
 				{/*<Text>h</Text>*/}
 				<MealList recordList={this.props.recordList}/>
@@ -105,7 +116,7 @@ const styles = StyleSheet.create({
 	topBar:{
 		height: 60,
 		flexDirection: "row",
-		backgroundColor:"#33A3F4",
+		// backgroundColor:"transpa",
 		justifyContent: "center",
 		alignItems: "center"
 	},
@@ -121,10 +132,11 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	statistics:{
-		backgroundColor:"#33A3F4",
+		// backgroundColor:"#33A3F4",
+		// backgroundImage:require("../../images/bg_1.jpg"),
 		justifyContent: "center",
 		alignItems: "center",
-		height: 200,
+		// height: 200,
 		flexDirection: "row",
 	},
 	visualization:{
@@ -149,9 +161,12 @@ const styles = StyleSheet.create({
 		height: 150,
 		marginBottom: 20,
 	},
-	list:{
-
-	},
+	text :{
+		paddingHorizontal: 5,
+		paddingVertical:0,
+		borderRadius: 15,
+		backgroundColor:"rgba(255,255,255,0.4)"
+	}
 
 
 });

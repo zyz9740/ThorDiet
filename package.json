@@ -20,6 +20,7 @@
     "react-native-circular-progress": "^1.1.0",
     "react-native-drawer": "^2.5.1",
     "react-native-gesture-handler": "^1.2.1",
+    "react-native-image-picker": "^0.28.1",
     "react-native-picker": "^4.3.7",
     "react-native-slider": "^0.11.0",
     "react-native-svg": "9.4.0",
